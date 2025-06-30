@@ -62,6 +62,8 @@ namespace NewgenWebsoftBatch30.Controllers
         //    await db.Employees.AddAsync(employee);
         //    db.SaveChanges();
         //    return RedirectToAction("Index");// Redirect to Index Action
+        // Redirect to Index Action
+        // Redirect to Index Action
         //}
 
         [HttpPost]
