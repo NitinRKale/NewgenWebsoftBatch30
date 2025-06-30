@@ -1,0 +1,155 @@
+﻿@model NewgenWebsoftBatch30.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3> EditEmployee</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmpId" />
+            <div class="form-group">
+                <label asp-for="EmpFirstName" class="control-label"></label>
+                <input asp-for="EmpFirstName" class="form-control" />
+                <span asp-validation-for="EmpFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpLastName" class="control-label"></label>
+                <input asp-for="EmpLastName" class="form-control" />
+                <span asp-validation-for="EmpLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailId" class="control-label"></label>
+                <input asp-for="EmailId" class="form-control" />
+                <span asp-validation-for="EmailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpGender" class="control-label"></label>
+                <input asp-for="EmpGender" class="form-control" />
+                <span asp-validation-for="EmpGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpPhoneNumber" class="control-label"></label>
+                <input asp-for="EmpPhoneNumber" class="form-control" />
+                <span asp-validation-for="EmpPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EmpStatus" /> @Html.DisplayNameFor(model => model.EmpStatus)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeptId" class="control-label">Department</label>
+                <select asp-for="DeptId" class="form-control">
+                    <option value="">--Select Department---</option>
+                    @foreach (var item in ViewBag.Departments)
+                    {
+                        <option value="@item.DeptId">@item.DeptName</option>
+                    }
+                </select>
+                <span asp-validation-for="DeptId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="btnUpdate" value="Update" class="btn btn-primary" />
+                <a class="btn btn-info" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/employeecontroller.js"></script>
+
+   @*  <script type="text/javascript">
+        // $(document).ready(function () {
+        //     $('#btnUpdate').click(function (e) {
+        //         e.preventDefault();
+        //         debugger;                
+
+        //          // var updatedEmployeeData = {
+        //          //     EmpId: $('#EmpId').val(),
+        //          //     EmpFirstName: $('#EmpFirstName').val(),
+        //          //     EmpLastName: $('#EmpLastName').val(),
+        //          //     EmailId: $('#EmailId').val(),
+        //          //     BirthDate:$('#BirthDate').val(),
+        //          //     EmpPhoneNumber: $('#EmpPhoneNumber').val(),
+        //          //     Salary: $('#Salary').val(),
+        //          //     EmpStatus: $('input[name="EmpStatus"]').is(':checked'),
+        //          //     DeptId:$('#DeptId').val()
+        //          // };
+
+        //         // Gather form data
+        //         var form = $(this).closest('form')[0];
+        //         var formData = new FormData(form);
+        //         var data = {};
+        //         formData.forEach(function (value, key) {
+        //             debugger;
+        //             if (key === "EmpStatus") {
+        //                // data[key] = form.EmpStatus.checked;
+        //                data[key] = $('input[name="EmpStatus"]').is(':checked');
+        //             } else {
+        //                 data[key] = value;
+        //             }
+        //         });
+        //          debugger;
+        //         // Get anti-forgery token
+        //         var token = $('input[name="__RequestVerificationToken"]').val();
+
+        //         $.ajax({
+        //             url: '/Employee/Edit', // Use your AJAX endpoint
+        //             type: 'POST',
+        //             contentType: 'application/json',
+        //             headers: { 'RequestVerificationToken': token },
+        //             data: JSON.stringify(data),
+        //             success: function (result) {
+        //                 debugger;
+        //                 if (result.success) {
+        //                     Swal.fire({
+        //                         title: 'Updated',
+        //                         type:'success',
+        //                         icon: 'success',
+        //                         text: result.message,
+        //                         button:'Close'
+        //                     }).then(function () {
+        //                         window.location.href = result.redirectTo;
+        //                     });
+        //                 } else {
+        //                     Swal.fire({
+        //                         icon: 'error',
+        //                         title: 'Oops..',
+        //                         text:  'Failed to Update employee. Please check your input.'
+        //                     });
+        //                 }
+        //             },
+        //             error: function () {
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Oops..',
+        //                     text:  'Failed to Update employee. Please check your input.'
+        //                 });
+        //             }
+        //         });
+        //     });
+        // });
+    </script> *@
+
+    @{
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

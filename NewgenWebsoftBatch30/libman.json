@@ -1,0 +1,40 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "sweetalert2@11.22.0",
+      "destination": "wwwroot/sweetalert2/",
+      "files": [
+        "sweetalert2.min.js",
+        "sweetalert2.all.js",
+        "sweetalert2.all.min.js",
+        "sweetalert2.css",
+        "sweetalert2.d.ts",
+        "sweetalert2.esm.all.js",
+        "sweetalert2.esm.all.min.js",
+        "sweetalert2.esm.js",
+        "sweetalert2.esm.min.js",
+        "sweetalert2.js",
+        "sweetalert2.min.css"
+      ]
+    },
+    {
+      "library": "datatable@2.0.2",
+      "destination": "wwwroot/jqdatatable/datatable/",
+      "files": [
+        "js/datatable.min.js",
+        "css/datatable-bootstrap.css",
+        "css/datatable-bootstrap.min.css",
+        "css/datatable.css",
+        "css/datatable.min.css",
+        "img/sort_asc.png",
+        "img/sort_both.png",
+        "img/sort_desc.png",
+        "js/datatable.jquery.js",
+        "js/datatable.jquery.min.js",
+        "js/datatable.js"
+      ]
+    }
+  ]
+}

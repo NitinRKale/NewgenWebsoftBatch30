@@ -1,0 +1,217 @@
+﻿@model NewgenWebsoftBatch30.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<hr />
+<h3>Create Employee</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @* <form asp-action="Create"> *@
+        <form>
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmpFirstName" class="control-label"></label>
+                <input asp-for="EmpFirstName" class="form-control" />
+                <span asp-validation-for="EmpFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpLastName" class="control-label"></label>
+                <input asp-for="EmpLastName" class="form-control" />
+                <span asp-validation-for="EmpLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailId" class="control-label"></label>
+                <input asp-for="EmailId" class="form-control" />
+                <span asp-validation-for="EmailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpGender" class="control-label">Gender</label>
+                <input type="radio" class="radio radio-rounded" asp-for="EmpGender" value="Male" /> Male
+                <input type="radio" class="radio radio-rounded" asp-for="EmpGender" value="Female" /> Female
+                <span asp-validation-for="EmpGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmpPhoneNumber" class="control-label"></label>
+                <input asp-for="EmpPhoneNumber" class="form-control" />
+                <span asp-validation-for="EmpPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EmpStatus" /> @Html.DisplayNameFor(model => model.EmpStatus)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeptId" class="control-label">Department</label>
+                <select asp-for="DeptId" class="form-control">
+                    <option value="">--Select Department---</option>
+                    @foreach (var item in ViewBag.Departments)
+                    {
+                        <option value="@item.DeptId">@item.DeptName</option>
+                    }
+                </select>
+                <span asp-validation-for="DeptId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="btnSubmit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-info" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/js/employeecontroller.js"></script>
+
+
+  @*   <script>
+        $(document).ready(function () {
+            $('#btnSubmit').click(function (e) {
+                e.preventDefault();
+                debugger;
+               
+                // Gather form data
+                var form = $(this).closest('form')[0];
+                var formData = new FormData(form);
+                var data = {};
+                formData.forEach(function (value, key) {
+                    debugger;
+                    if (key === "EmpStatus") {
+                       // data[key] = form.EmpStatus.checked;
+                       data[key] = $('input[name="EmpStatus"]').is(':checked');
+                    } else {
+                        data[key] = value;
+                    }
+                });               
+
+                // Get anti-forgery token
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '/Employee/Create', // Use your AJAX endpoint
+                    type: 'POST',
+                    contentType: 'application/json',
+                    headers: { 'RequestVerificationToken': token },
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        debugger;
+                        if (result.success == "True") {
+                            Swal.fire({
+                                title: 'Saved',
+                                type:'success',
+                                icon: 'success',
+                                text: result.message,
+                                button:'Close'
+                            }).then(function () {
+                                //window.location.href = '/Employee/Index';
+                                window.location.href = result.redirectTo;
+                            });
+                        } else {
+                            Swal.fire('Error', 'Failed to create employee.', 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'Failed to create employee. Please check your input.', 'error');
+                    }
+                });
+            });
+        });
+    </script> *@
+
+@*      <script>
+        $(document).ready(function () {
+            $('#btnSubmit').on('click', function (e) {
+                debugger;
+                e.preventDefault(); // Prevent default form submission
+                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you want to save this employee?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, save it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit(); // Submit the form if confirmed
+                    }
+                });
+            });
+        });
+    </script> *@
+
+
+    @* <script>
+        // document.addEventListener('DOMContentLoaded', function () {
+          $(document).ready(function () {
+             const form = document.querySelector('form');
+             $('#btnSubmit').click(function (e) {
+                 
+            // form.addEventListener('submit', async function (e) {
+                 e.preventDefault();
+                 debugger;
+                 // Gather form data
+                 const formData = new FormData(form);
+                 const data = {};
+                 formData.forEach((value, key) => {
+                     // For checkbox
+                     if (key === "EmpStatus") {
+                         data[key] = form.EmpStatus.checked;
+                     } else {
+                         data[key] = value;
+                     }
+                 });
+
+                 // Get anti-forgery token
+                 const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                 // AJAX POST
+                 const response = await fetch('/Employee/Create', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                         'RequestVerificationToken': token
+                     },
+                     body: JSON.stringify(data)
+                 });
+
+                 if (response.ok) {
+                     const result = await response.json();
+                     if (result.success) {
+                         Swal.fire({
+                             icon: 'success',
+                             title: 'Success',
+                             text: result.message
+                         }).then(() => {
+                             window.location.href = '/Employee/Index';
+                         });
+                     }
+                 } else {
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Error',
+                         text: 'Failed to create employee. Please check your input.'
+                     });
+                 }
+             //});
+               });
+         });
+    </script> *@
+
+    @* @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} *@
+}
