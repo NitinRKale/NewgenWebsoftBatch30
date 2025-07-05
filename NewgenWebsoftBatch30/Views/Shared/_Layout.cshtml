@@ -34,27 +34,9 @@
     <link href="~/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/datatables/datatables.min.css" rel="stylesheet" />
 
-
-    <!-- Javascript Files
-    ================================================== -->
-    <script src="~/pharmaasset/js/jquery-3.3.1.min.js"></script>
-    <script src="~/pharmaasset/js/jquery-ui.js"></script>
-    <script src="~/pharmaasset/js/popper.min.js"></script>
-    <script src="~/pharmaasset/js/bootstrap.min.js"></script>
-    <script src="~/pharmaasset/js/owl.carousel.min.js"></script>
-    <script src="~/pharmaasset/js/jquery.magnific-popup.min.js"></script>
-    @* <script src="~/pharmaasset/js/aos.js"></script> *@
-    <script src="~/pharmaasset/js/main.js"></script>
-
-    <!-- DataTables JS (correct file name) -->
-    <script src="~/datatables/datatables.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    @*  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-
-    <!-- SweetAlert2 JS (only one needed) -->
-    <script src="~/sweetalert2/sweetalert2.min.js"></script>
-
+    <!-- Bootstrap Date Picker css -->
+    <link href="~/bootstrap-datepicker-1.10.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/bootstrap-datepicker-1.10.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -160,6 +142,36 @@
                 &copy; 2025 - Newgen WebSoft - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>
+
+
+        <!-- Javascript Files
+        ================================================== -->
+        <script src="~/pharmaasset/js/jquery-3.3.1.min.js"></script>
+        <script src="~/pharmaasset/js/jquery-ui.js"></script>
+        <script src="~/pharmaasset/js/popper.min.js"></script>
+        <script src="~/pharmaasset/js/bootstrap.min.js"></script>
+        <script src="~/pharmaasset/js/owl.carousel.min.js"></script>
+        <script src="~/pharmaasset/js/jquery.magnific-popup.min.js"></script>
+        @* <script src="~/pharmaasset/js/aos.js"></script> *@
+        <script src="~/pharmaasset/js/main.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- DataTables JS (correct file name) -->
+        <script src="~/datatables/datatables.min.js"></script>
+        
+        <!-- Bootstrap JS -->
+        @*  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+
+        <!-- SweetAlert2 JS (only one needed) -->
+        <script src="~/sweetalert2/sweetalert2.min.js"></script>
+
+        <!-- Bootstrap Date Picker js -->
+        <script src="~/bootstrap-datepicker-1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+
+
         <!-- footer end -->
         @await RenderSectionAsync("Scripts", required: false)
 

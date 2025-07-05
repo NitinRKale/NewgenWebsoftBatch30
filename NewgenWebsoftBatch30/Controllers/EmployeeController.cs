@@ -69,12 +69,12 @@ namespace NewgenWebsoftBatch30.Controllers
         public async Task<IActionResult> Create([FromBody] Employee employee)
         {
             try
-            {
+            {              
                 if (!ModelState.IsValid)
-                {
-                    return Json(new { success = "Fail", message = "Error creating employee." });
+                {                  
+                    return Json(new { success = false, message = "Error creating employee." });
                 }
-
+               
                 await db.Employees.AddAsync(employee);
                 await db.SaveChangesAsync();
 
@@ -105,21 +105,28 @@ namespace NewgenWebsoftBatch30.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    db.Employees.Update(employee);
-                    await db.SaveChangesAsync();
-                    //return RedirectToAction("Index");
-                    return Json(new { success = true, result = "Updated", message = "Employee updated successfully.", 
-                        ErrorMessage = "", redirectTo = Url.Action("Index", "Employee") });
+                    //ViewBag.Departments = await db.Departments.ToListAsync();
+                    //return View(employee);
+                    return Json(new { success = false, message = "Error updating employee." });
                 }
-                ViewBag.Departments = await db.Departments.ToListAsync();
-                return View(employee);
+
+                db.Employees.Update(employee);
+                await db.SaveChangesAsync();
+                return Json(new
+                {
+                    success = true,
+                    result = "Updated",
+                    message = "Employee updated successfully.",
+                    ErrorMessage = "",
+                    redirectTo = Url.Action("Index", "Employee")
+                });               
             }
             catch (Exception ex)
             {
                 return Json(new { success = "Error", ErrorMessage = ex.Message });
-            }           
+            }
         }
 
         [HttpGet]
@@ -153,7 +160,7 @@ namespace NewgenWebsoftBatch30.Controllers
             {
                 if (empId <= 0)
                 {
-                    return Json(new { success = "Fail", message = "Error encountered while delete employee." });
+                    return Json(new { success = false, message = "Error encountered while delete employee." });
                 }
 
                 var employee = await db.Employees.FirstOrDefaultAsync(d => d.EmpId == empId);
@@ -162,10 +169,16 @@ namespace NewgenWebsoftBatch30.Controllers
                 {
                     db.Employees.Remove(employee);
                     db.SaveChanges();
-                    return Json(new { success = "True", result = "Deleted", message = "Employee deleted successfully.", 
-                                        ErrorMessage = "", redirectTo = Url.Action("Index", "Employee") });
+                    return Json(new
+                    {
+                        success = true,
+                        result = "Deleted",
+                        message = "Employee deleted successfully.",
+                        ErrorMessage = "",
+                        redirectTo = Url.Action("Index", "Employee")
+                    });
                 }
-                return Json(new { success = "Fail", message = "Employee details was not found" });
+                return Json(new { success = false, message = "Employee details was not found" });
             }
             catch (Exception ex)
             {
