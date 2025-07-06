@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NewgenWebsoftBatch30.DataContext;
 using NewgenWebsoftBatch30.Models;
 using System.Threading.Tasks;
 
 namespace NewgenWebsoftBatch30.Controllers
 {
+    public class DeleteRequest
+    {
+        public int Id { get; set; }
+    }
+
     public class DepartmentController : Controller
     {
         private readonly NewgenWebsoftDbContext db;
 
-        public DepartmentController (NewgenWebsoftDbContext dbContext)
+        public DepartmentController(NewgenWebsoftDbContext dbContext)
         {
             this.db = dbContext;
         }
@@ -25,93 +29,118 @@ namespace NewgenWebsoftBatch30.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-          
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Department department)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([FromForm] Department department)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await db.Departments.AddAsync(department);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { success = false, message = "Error creating department." });
             }
-            return View(department);
+            try
+            {
+                await db.Departments.AddAsync(department);
+                await db.SaveChangesAsync();
+                return Json(new
+                {
+                    success = true,
+                    message = "Department created successfully.",
+                    redirectTo = Url.Action("Index", "Department")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (id>0)
-            {
-                var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
-                if (department != null)
-                {
-                    return View(department);
-                }
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(Department department)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Departments.Update(department);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+            if (id <= 0) return NotFound();
+            var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
+            if (department == null) return NotFound();
             return View(department);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([FromForm] Department department)
         {
-            if (id > 0)
+            if (!ModelState.IsValid)
             {
-                var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
-
-                if (department != null)
-                {
-                    return View(department);
-                }
+                return Json(new { success = false, message = "Error updating department." });
             }
-            return NotFound();
+            try
+            {
+                var existing = await db.Departments.FindAsync(department.DeptId);
+                if (existing == null) return NotFound();
+
+                existing.DeptName = department.DeptName;
+                db.Departments.Update(existing);
+                await db.SaveChangesAsync();
+                return Json(new
+                {
+                    success = true,
+                    message = "Department updated successfully.",
+                    redirectTo = Url.Action("Index", "Department")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id > 0)
-            {
-                var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
-
-                if (department != null)
-                {
-                    return View(department);
-                }
-            }
-            return NotFound();
+            if (id <= 0) return NotFound();
+            var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
+            if (department == null) return NotFound();
+            return View(department);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteDept(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteDept([FromBody] DeleteRequest request)
         {
-            if (id > 0)
+            if (request == null || request.Id <= 0)
             {
-                var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
-
-                if (department != null)
-                {
-                    db.Departments.Remove(department);
-                     db.SaveChanges();
-                    return  RedirectToAction("Index");
-                }
+                return Json(new { success = false, message = "Invalid department ID." });
             }
-            return NotFound();
+            try
+            {
+                var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == request.Id);
+                if (department == null)
+                {
+                    return Json(new { success = false, message = "Department not found." });
+                }
+                db.Departments.Remove(department);
+                await db.SaveChangesAsync();
+                return Json(new
+                {
+                    success = true,
+                    message = "Department deleted successfully.",
+                    redirectTo = Url.Action("Index", "Department")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id <= 0) return NotFound();
+            var department = await db.Departments.FirstOrDefaultAsync(d => d.DeptId == id);
+            if (department == null) return NotFound();
+            return View(department);
         }
     }
 }
