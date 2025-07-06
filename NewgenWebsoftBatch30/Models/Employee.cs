@@ -46,6 +46,5 @@ namespace NewgenWebsoftBatch30.Models
 
         //Welcome to Newgen Websoft Batch 30
 
-
     }
 }
