@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
     <PackageReference Include="Bootstrap.v3.Datetimepicker.CSS" Version="4.17.49" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.6" />
